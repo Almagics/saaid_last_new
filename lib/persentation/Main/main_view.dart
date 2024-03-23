@@ -8,6 +8,7 @@ import '../appbar_bottom/navBottomWighget.dart';
 import '../resources/assets_manager.dart';
 import '../resources/color_manager.dart';
 import '../resources/routes_manager.dart';
+import '../widget/roundedCardWidget.dart';
 
 class MainView extends StatefulWidget {
   const MainView({Key? key}) : super(key: key);
@@ -34,39 +35,74 @@ class _MainViewState extends State<MainView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
 
-        systemOverlayStyle: SystemUiOverlayStyle(
-            statusBarColor: ColorManager.white,
-            statusBarBrightness: Brightness.light
-        ),
-        elevation: 0.0,
-
-      ),
      // bottomNavigationBar: NavBottom(nopage: _page,),
-        body: Container(
-          color: ColorManager.white,
-          child:  Center(
-            child: Column(
-              children: <Widget>[
-                Text("Home",style: Theme.of(context).textTheme.headlineLarge,),
-
-                const Center(child: Image(image: AssetImage(ImageAssets.logo),)),
+        body: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
 
 
-                 Row(
+              const Center(child: Image(image: AssetImage(ImageAssets.logo),)),
 
-mainAxisAlignment: MainAxisAlignment.center,
+
+               Row(
+
+        mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+
+
+                  RoundedCard(
+                    title: 'Card 1',
+                    subtitle: 'Subtitle 1',
+                    image: AssetImage(ImageAssets.logo),
+                  ),
+                  SizedBox(width: 20,),
+                  RoundedCard(
+                    title: 'Card 2',
+                    subtitle: 'Subtitle 2',
+                    image: AssetImage(ImageAssets.logo),
+                  ),
+
+
+
+
+
+
+
+
+        ]),
+        SizedBox(height: 10,),
+              Row(
+
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
 
 
-]),
+
+
+
+                    RoundedCard(
+                      title: 'Card 3',
+                      subtitle: 'Subtitle 3',
+                      image: AssetImage(ImageAssets.logo),
+                    ),
+                    SizedBox(width: 20,),
+                    RoundedCard(
+                      title: 'Card 3',
+                      subtitle: 'Subtitle 3',
+                      image: AssetImage(ImageAssets.logo),
+                    ),
 
 
 
 
-              ],
-            ),
+                  ]),
+
+
+
+
+            ],
           ),
         )
 

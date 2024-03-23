@@ -85,8 +85,7 @@ SizedBox(height: 20,),
             style: ElevatedButton.styleFrom(
 
 
-              textStyle: getRegularStyle(fontSize:FontSize.s15,color: ColorManager.grey2),
-              primary: ColorManager.primary,
+              textStyle: getRegularStyle(fontSize:FontSize.s15,color: ColorManager.grey2), backgroundColor: ColorManager.primary,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(AppSize.s8),
 
