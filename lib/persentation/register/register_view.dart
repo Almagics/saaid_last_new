@@ -203,9 +203,9 @@ class _RegisterViewState extends State<RegisterView> {
                      onTap: () async {
                        final picker = await showDatePicker(
                            context: context,
-                           initialDate: DateTime.now(),
-                           firstDate: DateTime.now(),
-                           lastDate: DateTime(2040));
+                           initialDate: DateTime(2004),
+                           firstDate: DateTime(1970),
+                           lastDate: DateTime(2024));
                        setStateBirthDay(() {
                          birthDayController.text =
                              DateFormat.yMd().format(picker!);
