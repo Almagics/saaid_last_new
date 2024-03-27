@@ -118,7 +118,7 @@ class _RegisterViewState extends State<RegisterView> {
                Container(padding: const EdgeInsets.all(AppPadding.p8),
                    child: AppTextFormFiled(
                      iconData: Icons.pending_actions,
-                     controller: emailController,
+                     controller: firstNameController,
                      hintText: 'Enter First Name',
                    )),
 
@@ -135,7 +135,7 @@ class _RegisterViewState extends State<RegisterView> {
                Container(padding: const EdgeInsets.all(AppPadding.p8),
                    child: AppTextFormFiled(
                      iconData: Icons.list_alt_sharp,
-                     controller: emailController,
+                     controller: lastNameController,
                      hintText: 'Enter Last Name',
                    )),
 
