@@ -3,18 +3,19 @@ class OrderModel{
 
 
   final String supject;
-  final String userid;
-  final String designerid;
+  final String date;
+  final String status;
+  final String subtitle;
+  final String username;
   final int orderNo;
-  final String orderdate;
-  final String stauts;
+
 
   OrderModel( {required this.supject,
-    required this.userid,
-    required this.designerid,
-    required this.orderNo,
-    required this.orderdate,
-    required this.stauts
+    required this.date,
+    required this.status,
+    required this.subtitle,
+    required this.username,
+    required this.orderNo
 
 
 

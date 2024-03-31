@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter/src/services/text_formatter.dart';
 
 import '../resources/color_manager.dart';
 
@@ -21,7 +22,7 @@ class AppTextFormFiled extends StatefulWidget {
         this.readOnly = false,
         this.maxLine = 1,
         this.minLine = 1,
-        this.maxLength})
+        this.maxLength, required  this.inputFormatter})
       : super(key: key);
 
   final TextInputAction textInputAction;
@@ -39,6 +40,7 @@ class AppTextFormFiled extends StatefulWidget {
   final int? maxLine;
   final int? minLine;
   final int? maxLength;
+  final List<TextInputFormatter>? inputFormatter;
 
   @override
   State<AppTextFormFiled> createState() => _TextFiledAppState();
@@ -56,6 +58,7 @@ class _TextFiledAppState extends State<AppTextFormFiled> {
     return TextFormField(
      // textDirection : TextDirection.rtl,
     //  textAlign: TextAlign.right,
+      inputFormatters : widget.inputFormatter,
       maxLength: widget.maxLength,
       maxLines: widget.maxLine,
       minLines: widget.minLine,

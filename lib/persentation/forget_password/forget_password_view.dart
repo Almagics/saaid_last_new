@@ -66,7 +66,7 @@ crossAxisAlignment: CrossAxisAlignment.start,
           child: AppTextFormFiled(
 
            // controller: firstNameController,
-            hintText: "Enter E-mail",
+            hintText: "Enter E-mail", inputFormatter: null,
           )
       ),
 SizedBox(height: 20,),

@@ -40,7 +40,7 @@ class _BottomNavBarDemoState extends State<BottomNavBarDemo> {
       case 0:
         return new MainView();
       case 1:
-        return new OrderListView();
+        return new OrderViewList();
 
 
 
@@ -52,7 +52,7 @@ class _BottomNavBarDemoState extends State<BottomNavBarDemo> {
         return new FavoriteListView();
 
       case 4:
-        return new ProfileView();
+        return new Profile();
 
       default:
         return new Text("Error");

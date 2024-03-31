@@ -84,7 +84,7 @@ class _LoginViewState extends State<LoginView> {
                 child: AppTextFormFiled(
                   iconData: Icons.email_outlined,
                   controller: emailController,
-                  hintText: 'Enter E-mail',
+                  hintText: 'Enter E-mail', inputFormatter: null,
                 )),
 
 
@@ -106,7 +106,7 @@ class _LoginViewState extends State<LoginView> {
                     suffixIcon: true,
                     iconData: Icons.lock,
                     controller: passwordController,
-                    hintText: 'Enter Password',
+                    hintText: 'Enter Password', inputFormatter: null,
                 ),),
 
 

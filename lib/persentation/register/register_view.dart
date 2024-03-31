@@ -119,7 +119,7 @@ class _RegisterViewState extends State<RegisterView> {
                    child: AppTextFormFiled(
                      iconData: Icons.pending_actions,
                      controller: firstNameController,
-                     hintText: 'Enter First Name',
+                     hintText: 'Enter First Name', inputFormatter: null,
                    )),
 
 
@@ -136,7 +136,7 @@ class _RegisterViewState extends State<RegisterView> {
                    child: AppTextFormFiled(
                      iconData: Icons.list_alt_sharp,
                      controller: lastNameController,
-                     hintText: 'Enter Last Name',
+                     hintText: 'Enter Last Name', inputFormatter: null,
                    )),
 
 
@@ -213,7 +213,7 @@ class _RegisterViewState extends State<RegisterView> {
                      },
                      iconData: Icons.cake_outlined,
                      controller: birthDayController,
-                     hintText: 'Enter your Birth date',
+                     hintText: 'Enter your Birth date', inputFormatter: null,
                    );
                  }),
                ),
@@ -238,7 +238,7 @@ class _RegisterViewState extends State<RegisterView> {
                    child: AppTextFormFiled(
                      iconData: Icons.email_outlined,
                      controller: emailController,
-                     hintText: 'Enter E-mail',
+                     hintText: 'Enter E-mail', inputFormatter: null,
                    )),
 
 
@@ -260,7 +260,7 @@ class _RegisterViewState extends State<RegisterView> {
                    suffixIcon: true,
                    iconData: Icons.lock,
                    controller: passwordController,
-                   hintText: 'Enter Password',
+                   hintText: 'Enter Password', inputFormatter: null,
                  ),),
 
 

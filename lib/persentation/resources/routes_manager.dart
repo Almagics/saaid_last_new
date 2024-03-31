@@ -1,5 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:saaid/persentation/order/order_list_view.dart';
+import 'package:saaid/persentation/order/order_new_view.dart';
+import 'package:saaid/persentation/payment/payment_done.dart';
+import 'package:saaid/persentation/payment/payment_view.dart';
 import 'package:saaid/persentation/resources/strings_manager.dart';
 
 import '../Main/main_view.dart';
@@ -27,6 +31,13 @@ class Routes {
   static const String profile = "/profile";
 
   static const String forgetpassword = "/forgetpassword";
+
+  static const String orderlist = "/orderlist";
+
+  static const String ordernew = "/ordernew";
+
+  static const String payment = "/payment";
+  static const String paymentdone = "/paymentdone";
 }
 
 class RouteGenerator {
@@ -58,7 +69,16 @@ class RouteGenerator {
       case Routes.forgetpassword:
         return MaterialPageRoute(builder: (_) =>  ForgetPasswordView());
 
+      case Routes.orderlist:
+        return MaterialPageRoute(builder: (_) =>  OrderViewList());
 
+      case Routes.ordernew:
+        return MaterialPageRoute(builder: (_) =>  OrderNewView());
+
+      case Routes.payment:
+        return MaterialPageRoute(builder: (_) =>  PaymentView(price: "30"));
+      case Routes.paymentdone:
+        return MaterialPageRoute(builder: (_) =>  PaymentDone());
 
       default:
         return unDefiendRoute();

@@ -70,6 +70,7 @@ flutter:
      - assets/images/topsplash.png
      - assets/images/top_login.jpeg
      - assets/images/registertop.jpg
+     - assets/images/done.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
