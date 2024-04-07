@@ -45,15 +45,15 @@ Future<List<OrderModel>>   GetOrder() async
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.pushReplacementNamed(context, Routes.ordernew);
-        },
+    //  floatingActionButton: FloatingActionButton(
+      //  onPressed: () {
+       //   Navigator.pushReplacementNamed(context, Routes.ordernew);
+      //  },
 
 
-        child: Icon(Icons.add),
-        backgroundColor: ColorManager.primary,
-      ),
+      //  child: Icon(Icons.add),
+       // backgroundColor: ColorManager.primary,
+     // ),
 
 
       body: FutureBuilder<List<OrderModel>>(

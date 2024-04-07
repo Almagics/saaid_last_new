@@ -2,6 +2,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 
 import '../appbar_bottom/navBottomWighget.dart';
 
@@ -52,16 +53,35 @@ class _MainViewState extends State<MainView> {
                 children: [
 
 
-                  RoundedCard(
-                    title: 'Card 1',
-                    subtitle: 'Subtitle 1',
-                    image: AssetImage(ImageAssets.logo),
+                  GestureDetector(
+                    onTap: (){
+
+
+                      Navigator.pushReplacementNamed(context, Routes.providers);
+
+
+                    },
+                    child: RoundedCard(
+                      title: 'Card 1',
+                      subtitle: 'Subtitle 1',
+                      image: AssetImage(ImageAssets.logo),
+                    ),
                   ),
                   SizedBox(width: 20,),
-                  RoundedCard(
-                    title: 'Card 2',
-                    subtitle: 'Subtitle 2',
-                    image: AssetImage(ImageAssets.logo),
+                  GestureDetector(
+                    onTap: (){
+
+
+                      Navigator.pushReplacementNamed(context, Routes.providers);
+
+
+                    },
+
+                    child: RoundedCard(
+                      title: 'Card 2',
+                      subtitle: 'Subtitle 2',
+                      image: AssetImage(ImageAssets.logo),
+                    ),
                   ),
 
 
@@ -82,16 +102,36 @@ class _MainViewState extends State<MainView> {
 
 
 
-                    RoundedCard(
-                      title: 'Card 3',
-                      subtitle: 'Subtitle 3',
-                      image: AssetImage(ImageAssets.logo),
+                    GestureDetector(
+                      onTap: (){
+
+
+                        Navigator.pushReplacementNamed(context, Routes.providers);
+
+
+                      },
+                      child: RoundedCard(
+                        title: 'Card 3',
+                        subtitle: 'Subtitle 3',
+                        image: AssetImage(ImageAssets.logo),
+                      ),
                     ),
                     SizedBox(width: 20,),
-                    RoundedCard(
-                      title: 'Card 3',
-                      subtitle: 'Subtitle 3',
-                      image: AssetImage(ImageAssets.logo),
+                    GestureDetector(
+
+                      onTap: (){
+
+
+                        Navigator.pushReplacementNamed(context, Routes.providers);
+
+
+                      },
+
+                      child: RoundedCard(
+                        title: 'Card 3',
+                        subtitle: 'Subtitle 3',
+                        image: AssetImage(ImageAssets.logo),
+                      ),
                     ),
 
 

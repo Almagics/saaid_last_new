@@ -3,6 +3,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:intl/intl.dart';
 
 
 import '../resources/assets_manager.dart';
@@ -31,9 +33,10 @@ class _OrderNewViewState extends State<OrderNewView> {
 
   final _formKey = GlobalKey<FormState>();
 
+  final DateorderController = TextEditingController();
 
-
-
+  late GoogleMapController _mapController;
+  LatLng _selectedLocation = LatLng(0, 0);
 
 
 
@@ -122,7 +125,98 @@ class _OrderNewViewState extends State<OrderNewView> {
                     )),
 
 
+                Container(
+                  padding: const EdgeInsets.all(4.0),
+                  child: Text(
+                    'Date Of Order',
+                    style: Theme.of(context).textTheme.headlineMedium,
+                  ),
+                ),
 
+                Container(
+                  padding: const EdgeInsets.all(4.0),
+                  child: StatefulBuilder(builder: (context, setStateBirthDay) {
+                    return AppTextFormFiled(
+                      readOnly: true,
+                      onTap: () async {
+                        final picker = await showDatePicker(
+                            context: context,
+                            initialDate: DateTime(2004),
+                            firstDate: DateTime(1970),
+                            lastDate: DateTime(2024));
+                        setStateBirthDay(() {
+                          DateorderController.text =
+                              DateFormat.yMd().format(picker!);
+                        });
+                      },
+                      iconData: Icons.cake_outlined,
+                      controller: DateorderController,
+                      hintText: 'Enter date', inputFormatter: null,
+                    );
+                  }),
+                ),
+
+
+
+
+                Row(
+                  children: [
+                    Container(
+                      height: 100,
+                      width: 400,
+                      child:   GoogleMap(
+                        initialCameraPosition: CameraPosition(
+                          target: LatLng(0, 0),
+                          zoom: 15,
+                        ),
+                        onMapCreated: (controller) {
+                          setState(() {
+                            _mapController = controller;
+                          });
+                        },
+                        onTap: (LatLng location) {
+                          setState(() {
+                            _selectedLocation = location;
+                          });
+                        },
+                      ),
+                    )
+                  ],
+                ),
+
+
+
+
+
+                Row(
+
+
+
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+
+
+                    Container(
+                      padding: const EdgeInsets.all(4.0),
+                      child: Text(
+                        'Select Your Location',
+                        style: Theme.of(context).textTheme.headlineMedium,
+                      ),
+                    ),
+
+
+                    Container(
+                      margin: EdgeInsets.all(4),
+                      child: IconButton(
+                        icon: Icon(Icons.location_on),
+                        onPressed: () {
+                          // Handle location action
+                        },
+                      ),
+                    ),
+                  ],
+
+                ),
 
 
 

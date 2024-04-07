@@ -13,6 +13,7 @@ import '../forget_password/forget_password_view.dart';
 import '../login/login_View.dart';
 
 import '../register/register_view.dart';
+import '../service_provider/proiverList_view.dart';
 import '../splash/splash_view.dart';
 
 class Routes {
@@ -38,6 +39,8 @@ class Routes {
 
   static const String payment = "/payment";
   static const String paymentdone = "/paymentdone";
+
+  static const String providers = "/providers";
 }
 
 class RouteGenerator {
@@ -79,6 +82,9 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) =>  PaymentView(price: "30"));
       case Routes.paymentdone:
         return MaterialPageRoute(builder: (_) =>  PaymentDone());
+
+      case Routes.providers:
+        return MaterialPageRoute(builder: (_) =>  ProviderListView());
 
       default:
         return unDefiendRoute();

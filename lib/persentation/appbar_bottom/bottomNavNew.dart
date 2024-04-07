@@ -13,6 +13,7 @@ import 'package:saaid/persentation/profile/profileView.dart';
 
 import '../Main/main_view.dart';
 
+import '../options/options_view.dart';
 import '../resources/color_manager.dart';
 import '../resources/routes_manager.dart';
 
@@ -49,10 +50,10 @@ class _BottomNavBarDemoState extends State<BottomNavBarDemo> {
         return new ChatWidget();
 
       case 3:
-        return new FavoriteListView();
+        return new Profile();
 
       case 4:
-        return new Profile();
+        return new OptoinsView();
 
       default:
         return new Text("Error");
@@ -103,8 +104,8 @@ class _BottomNavBarDemoState extends State<BottomNavBarDemo> {
           Icon(Icons.home, size: 30),
           Icon(Icons.restore_outlined, size: 30),
           Icon(Icons.chat, size: 30),
-          Icon(Icons.star, size: 30),
           Icon(Icons.account_circle, size: 30),
+          Icon(Icons.settings, size: 30),
         ],
         color: Colors.grey,
         buttonBackgroundColor: ColorManager.primary,

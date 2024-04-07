@@ -8,6 +8,8 @@ class ImageAssets {
   static const String registerTop =   "$imagePath/registertop.jpg";
   static const String paymentImg =   "$imagePath/done.png";
 
+  static const String userlogo =   "$imagePath/userlogo.png";
+
 
 
 }
