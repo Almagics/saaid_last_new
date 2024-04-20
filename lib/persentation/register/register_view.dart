@@ -1,4 +1,5 @@
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -23,8 +24,8 @@ class RegisterView extends StatefulWidget {
 
 class _RegisterViewState extends State<RegisterView> {
 
-  //final FirebaseAuthService _auth = FirebaseAuthService();
- // final  _store = FirebaseFirestore.instance;
+  final FirebaseAuthService _auth = FirebaseAuthService();
+  final  _store = FirebaseFirestore.instance;
 
 
   final firstNameController = TextEditingController();
@@ -274,7 +275,7 @@ class _RegisterViewState extends State<RegisterView> {
                        onPressed: () {
                          //pageController.animateToPage(getNextIndex, duration: const Duration(microseconds: AppConstants.splashDelay), curve: Curves.bounceInOut);
                          // Navigator.pushReplacementNamed(context, Routes.mainRoute);
-                         // _signin();
+                         _signup();
                        },
 
 
@@ -349,6 +350,96 @@ class _RegisterViewState extends State<RegisterView> {
   }
 
 
+
+
+
+  void _signup() async{
+
+
+    //.clearSharedPreferences();
+    String fullname = firstNameController.text +" "+ lastNameController.text;
+
+    // String idNumber = idController.text;
+    String phone = phoneController.text;
+    String email = emailController.text;
+    String birthday = birthDayController.text;
+    String password = passwordController.text;
+
+    String userType = "user";
+    String gender = genderController.text;
+
+
+
+
+
+
+
+    User? user = await _auth.signupWithEmailAndPassword(email, password);
+
+
+
+
+
+    if(user!= null){
+    print("User is successfully created");
+    await _store.collection("Users")
+        .doc(email)
+        .set({
+
+    "Email":email,
+    "Password":password,
+    "FullName":fullname,
+      "BirthDay":birthday,
+      "Gender":gender,
+
+
+
+    "PhoneNumber":phone,
+
+    "Role":userType,
+    "Username":user.uid.toString()
+
+
+    });
+
+
+
+    User? usersin = await _auth.signInWithEmailAndPassword(email, password);
+
+
+    // Navigator.pushReplacementNamed(context, Routes.newhome);
+
+
+    if(usersin!= null) {
+    print("User is successfully login");
+
+
+
+
+    Navigator.pushReplacementNamed(context, Routes.newhome);
+
+    }
+    // Navigator.pushReplacementNamed(context, Routes.mainRoute);
+
+
+
+    }else{
+    _displayDialog('Registration failed. Please try again.');
+    }
+
+
+
+  }
+
+
+
+
+
+
 }
+
+
+
+
 
 

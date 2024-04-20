@@ -22,7 +22,7 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginView> {
-//  final FirebaseAuthService _auth = FirebaseAuthService();
+  final FirebaseAuthService _auth = FirebaseAuthService();
   final emailController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   final passwordController = TextEditingController();
@@ -119,8 +119,8 @@ class _LoginViewState extends State<LoginView> {
                     child: ElevatedButton(
                       onPressed: () {
                         //pageController.animateToPage(getNextIndex, duration: const Duration(microseconds: AppConstants.splashDelay), curve: Curves.bounceInOut);
-                        Navigator.pushReplacementNamed(context, Routes.newhome);
-                       // _signin();
+                        //Navigator.pushReplacementNamed(context, Routes.newhome);
+                       _signin();
                       },
 
 
@@ -199,6 +199,14 @@ class _LoginViewState extends State<LoginView> {
 
 
 
+
+
+
+
+
+
+
+
   void _displayDialog(String message) {
     showDialog(
       context: context,
@@ -224,6 +232,45 @@ class _LoginViewState extends State<LoginView> {
   }
 
 
+
+  void _signin() async{
+
+
+    // _auth.clearSharedPreferences();
+
+    String email = emailController.text;
+    //String birthday = birthDayController.text;
+    String password = passwordController.text;
+
+    User? user = await _auth.signInWithEmailAndPassword(email, password);
+
+
+    // Navigator.pushReplacementNamed(context, Routes.newhome);
+
+
+    if(user!= null){
+      print("User is successfully login");
+
+      // var role = await _auth.getRole();
+
+
+      Navigator.pushReplacementNamed(context, Routes.mainRoute);
+
+
+    }
+
+
+
+
+
+
+    else{
+      _displayDialog("Wrong Password Or Username");
+    }
+
+
+
+  }
 
 
 
