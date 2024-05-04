@@ -74,6 +74,14 @@ flutter:
      - assets/images/registertop.jpg
      - assets/images/done.png
      - assets/images/userlogo.png
+     - assets/images/provider.png
+     - assets/images/user.png
+     - assets/images/air.png
+     - assets/images/electric.png
+     - assets/images/plmpuing.png
+     - assets/images/carpentry.png
+
+
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

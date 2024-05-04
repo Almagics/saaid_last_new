@@ -2,7 +2,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 
+import '../../data/firebase_auth/firebase_auth_service.dart';
 import '../appbar_bottom/navBottomWighget.dart';
 
 import '../resources/assets_manager.dart';
@@ -22,7 +24,7 @@ class _OptoinsViewState extends State<OptoinsView> {
 
   int _selectedIndex = 0;
 
-
+  FirebaseAuthService _auth =  FirebaseAuthService();
 
 
 
@@ -83,11 +85,17 @@ class _OptoinsViewState extends State<OptoinsView> {
                       geticon: Icons.share,
                     ),
                     SizedBox(width: 20,),
-                    RoundedCardOptions(
-                      title: 'Logout',
-                      geticon: Icons.login,
+                    GestureDetector(
+                      onTap: (){
+                        _auth.signOut();
+                        Navigator.pushReplacementNamed(context, Routes.loginRoute);
+                      },
+                      child: RoundedCardOptions(
+                        title: 'Logout',
+                        geticon: Icons.login,
 
 
+                      ),
                     ),
 
 

@@ -40,9 +40,13 @@ class _RegisterViewState extends State<RegisterView> {
   final genderController = TextEditingController();
   final birthDayController = TextEditingController();
 
+  final ServiceType = TextEditingController();
+
   final userTypeController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  bool isProviderClicked = false;
 
+  bool isUserClicked = false;
 
 
   _getDropDownDecoration({required hintText, required IconData icon}) {
@@ -96,6 +100,7 @@ class _RegisterViewState extends State<RegisterView> {
                ),
 
 
+
                Container(
                  padding: const EdgeInsets.all(4.0),
                  child: Center(
@@ -105,6 +110,148 @@ class _RegisterViewState extends State<RegisterView> {
                    ),
                  ),
                ),
+
+
+
+               Container(padding: const EdgeInsets.all(10.0),
+                   //margin: const EdgeInsets.only(top: 10.00),
+                   child:  Center(child:
+
+                   Row(
+                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                     children: [
+
+                       GestureDetector(
+                         onTap: () {
+                           setState(() {
+                             isProviderClicked = !isProviderClicked;
+                             isUserClicked = false;
+                           });
+                         },
+                         child: Container(
+                           width: 150,
+                           height: 150,
+                           decoration: BoxDecoration(
+                             border: Border.all(
+                               color: isProviderClicked ? Colors.red : Colors.blue,
+                               width: 2.0,
+                             ),
+                           ),
+                           child: Column(
+                             mainAxisAlignment: MainAxisAlignment.center,
+                             children: [
+                               Image.asset(
+                                 ImageAssets.provider, // Replace with your image path
+                                 width: 100,
+                                 height: 100,
+                               ),
+                               SizedBox(height: 10),
+                               Text(
+                                 'Provider',
+                                 style: TextStyle(
+                                   color: isProviderClicked ? Colors.red : Colors.blue,
+                                 ),
+                               ),
+                             ],
+                           ),
+
+
+
+
+
+
+                         ),
+                       ),
+
+                       GestureDetector(
+                         onTap: () {
+                           setState(() {
+                             isUserClicked = !isUserClicked;
+                             isProviderClicked = false;
+                           });
+                         },
+                         child: Container(
+                           width: 150,
+                           height: 150,
+                           decoration: BoxDecoration(
+                             border: Border.all(
+                               color: isUserClicked ? Colors.red : Colors.blue,
+                               width: 2.0,
+                             ),
+                           ),
+                           child: Column(
+                             mainAxisAlignment: MainAxisAlignment.center,
+                             children: [
+                               Image.asset(
+                                 ImageAssets.user, // Replace with your image path
+                                 width: 100,
+                                 height: 100,
+                               ),
+                               SizedBox(height: 10),
+                               Text(
+                                 'User',
+                                 style: TextStyle(
+                                   color: isUserClicked ? Colors.red : Colors.blue,
+                                 ),
+                               ),
+                             ],
+                           ),
+
+
+
+
+
+
+                         ),
+                       ),
+
+
+
+
+
+                     ],
+                   )
+
+                   )
+
+               ),
+
+
+
+
+
+
+
+               SizedBox(height: 5,),
+
+
+               Visibility(
+                 visible: isProviderClicked,
+                 child: Container(
+                   padding: const EdgeInsets.all(4.0),
+                   child: DropdownButtonFormField(
+                       validator: (value) {
+                         if (value == null) {
+                           return 'Required*';
+                         }
+                       },
+                       icon: const Icon(Icons.keyboard_arrow_down),
+                       decoration: _getDropDownDecoration(
+                           hintText: 'Service Type', icon: Icons.home_repair_service),
+                       items: ['Air conditioning repair', 'Electrical repair','Plumbing repair','Carpentry repair']
+                           .map((e) => DropdownMenuItem(
+                         child: Text(e.toString()),
+                         value: e.toString(),
+                       ))
+                           .toList(),
+                       onChanged: (value) {
+                         setState(() {
+                           ServiceType.text = value!;
+                         });
+                       }),
+                 ),
+               ),
+
 
 
                SizedBox(height: 5,),
@@ -140,7 +287,38 @@ class _RegisterViewState extends State<RegisterView> {
                      hintText: 'Enter Last Name', inputFormatter: null,
                    )),
 
+               SizedBox(height: 5,),
+               Container(
+                 padding: const EdgeInsets.all(4.0),
+                 child: Text(
+                   'Address',
+                   style: Theme.of(context).textTheme.headlineMedium,
+                 ),
+               ),
 
+               Container(padding: const EdgeInsets.all(AppPadding.p8),
+                   child: AppTextFormFiled(
+                     iconData: Icons.location_city,
+                     controller: addressController,
+                     hintText: 'Enter Address', inputFormatter: null,
+                   )),
+
+
+               SizedBox(height: 5,),
+               Container(
+                 padding: const EdgeInsets.all(4.0),
+                 child: Text(
+                   'Phone Number',
+                   style: Theme.of(context).textTheme.headlineMedium,
+                 ),
+               ),
+
+               Container(padding: const EdgeInsets.all(AppPadding.p8),
+                   child: AppTextFormFiled(
+                     iconData: Icons.phone,
+                     controller: phoneController,
+                     hintText: 'Enter Phone Number', inputFormatter: null,
+                   )),
 
 
 
@@ -364,12 +542,19 @@ class _RegisterViewState extends State<RegisterView> {
     String email = emailController.text;
     String birthday = birthDayController.text;
     String password = passwordController.text;
+     String  serviceType = ServiceType.text;
+     String address = addressController.text;
 
-    String userType = "user";
     String gender = genderController.text;
 
 
+    String role = "user";
 
+
+    if(isProviderClicked){
+
+      role = "provider";
+    }
 
 
 
@@ -392,11 +577,12 @@ class _RegisterViewState extends State<RegisterView> {
       "BirthDay":birthday,
       "Gender":gender,
 
-
+"Address":address,
 
     "PhoneNumber":phone,
 
-    "Role":userType,
+    "Role":role,
+      "ServiceType":serviceType,
     "Username":user.uid.toString()
 
 

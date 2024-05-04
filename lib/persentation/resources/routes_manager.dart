@@ -84,7 +84,7 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) =>  PaymentDone());
 
       case Routes.providers:
-        return MaterialPageRoute(builder: (_) =>  ProviderListView());
+        return MaterialPageRoute(builder: (_) =>  ProviderListView(servicetype: '',));
 
       default:
         return unDefiendRoute();

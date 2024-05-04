@@ -254,7 +254,7 @@ class _LoginViewState extends State<LoginView> {
       // var role = await _auth.getRole();
 
 
-      Navigator.pushReplacementNamed(context, Routes.mainRoute);
+      Navigator.pushReplacementNamed(context, Routes.newhome);
 
 
     }

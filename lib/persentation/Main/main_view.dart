@@ -9,6 +9,7 @@ import '../appbar_bottom/navBottomWighget.dart';
 import '../resources/assets_manager.dart';
 import '../resources/color_manager.dart';
 import '../resources/routes_manager.dart';
+import '../service_provider/proiverList_view.dart';
 import '../widget/roundedCardWidget.dart';
 
 class MainView extends StatefulWidget {
@@ -57,14 +58,18 @@ class _MainViewState extends State<MainView> {
                     onTap: (){
 
 
-                      Navigator.pushReplacementNamed(context, Routes.providers);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => ProviderListView(servicetype: 'Air conditioning repair')),
+                      );
+
 
 
                     },
                     child: RoundedCard(
-                      title: 'Card 1',
-                      subtitle: 'Subtitle 1',
-                      image: AssetImage(ImageAssets.logo),
+                      title: 'conditioning',
+                      subtitle: 'Air conditioning',
+                      image: AssetImage(ImageAssets.air),
                     ),
                   ),
                   SizedBox(width: 20,),
@@ -72,15 +77,20 @@ class _MainViewState extends State<MainView> {
                     onTap: (){
 
 
-                      Navigator.pushReplacementNamed(context, Routes.providers);
+
+
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => ProviderListView(servicetype: 'Electrical repair')),
+                      );
 
 
                     },
 
                     child: RoundedCard(
-                      title: 'Card 2',
-                      subtitle: 'Subtitle 2',
-                      image: AssetImage(ImageAssets.logo),
+                      title: 'Electrical',
+                      subtitle: 'Electrical repair',
+                      image: AssetImage(ImageAssets.electric),
                     ),
                   ),
 
@@ -106,14 +116,17 @@ class _MainViewState extends State<MainView> {
                       onTap: (){
 
 
-                        Navigator.pushReplacementNamed(context, Routes.providers);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => ProviderListView(servicetype: 'Plumbing repair')),
+                        );
 
 
                       },
                       child: RoundedCard(
-                        title: 'Card 3',
-                        subtitle: 'Subtitle 3',
-                        image: AssetImage(ImageAssets.logo),
+                        title: 'Plumbing',
+                        subtitle: 'Plumbing repair',
+                        image: AssetImage(ImageAssets.plmpuing),
                       ),
                     ),
                     SizedBox(width: 20,),
@@ -122,15 +135,18 @@ class _MainViewState extends State<MainView> {
                       onTap: (){
 
 
-                        Navigator.pushReplacementNamed(context, Routes.providers);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => ProviderListView(servicetype: 'Carpentry repair')),
+                        );
 
 
                       },
 
                       child: RoundedCard(
-                        title: 'Card 3',
-                        subtitle: 'Subtitle 3',
-                        image: AssetImage(ImageAssets.logo),
+                        title: 'Carpentry',
+                        subtitle: 'Carpentry repair',
+                        image: AssetImage(ImageAssets.carpentry),
                       ),
                     ),
 

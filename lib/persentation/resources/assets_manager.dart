@@ -10,6 +10,15 @@ class ImageAssets {
 
   static const String userlogo =   "$imagePath/userlogo.png";
 
+  static const String user =   "$imagePath/user.png";
+
+  static const String provider =   "$imagePath/provider.png";
+
+  static const String air =   "$imagePath/air.png";
+  static const String electric =   "$imagePath/electric.png";
+  static const String plmpuing =   "$imagePath/plmpuing.png";
+  static const String carpentry =   "$imagePath/carpentry.png";
+
 
 
 }
