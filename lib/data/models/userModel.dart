@@ -12,6 +12,8 @@ class UserModel{
   final String serviceType;
   final String gender;
   final String birthday;
+  final String section;
+  final String Address;
 
   UserModel( {
     required this.email,
@@ -22,7 +24,11 @@ class UserModel{
     required this.username,
     required this.serviceType,
     required this.gender,
-    required this.birthday
+    required this.birthday,
+    required this.section,
+    required this.Address,
+
+
 
 
 
@@ -30,7 +36,7 @@ class UserModel{
   });
 
 
-  factory UserModel.fromMap(Map<String, dynamic> map) {
+  factory UserModel.fromMap(Map<String, dynamic> map, String documentId) {
     return UserModel(
       email: map['Email'],
       fullName:map['FullName'],
@@ -40,7 +46,9 @@ class UserModel{
       username:map['Username'],
       serviceType: map['ServiceType'],
       gender: map['Gender'],
-      birthday: map['BirthDay']
+      birthday: map['BirthDay'],
+      section: map['section'],
+      Address: map['Address'],
     );
   }
 

@@ -14,10 +14,10 @@ class ProviderService {
       return FirebaseFirestore.instance
           .collection('Users')
           .where('Role', isEqualTo: 'provider')
-          .where('ServiceType', isEqualTo: type)
+          .where('section', isEqualTo: type)
           .snapshots()
           .map((QuerySnapshot<Map<String, dynamic>> querySnapshot) {
-        return querySnapshot.docs.map((doc) => UserModel.fromMap(doc.data()))
+        return querySnapshot.docs.map((doc) => UserModel.fromMap(doc.data(),doc.id))
             .toList();
       });
     } catch (e) {

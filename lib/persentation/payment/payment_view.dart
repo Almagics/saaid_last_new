@@ -56,7 +56,7 @@ class _PaymentViewState extends State<PaymentView> {
         leading: IconButton(
           icon: Icon(Icons.arrow_back,color: ColorManager.primary,),
           onPressed: () {
-            Navigator.pushReplacementNamed(context, Routes.mainRoute);// Navigate back to the previous screen
+            Navigator.pushReplacementNamed(context, Routes.newhome);// Navigate back to the previous screen
           },
         ),
         systemOverlayStyle: SystemUiOverlayStyle(

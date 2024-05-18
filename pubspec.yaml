@@ -42,6 +42,19 @@ dependencies:
   intl: ^0.19.0
   google_maps_flutter: ^2.6.0
   cloud_firestore: ^4.17.0
+  firebase_storage: any
+  image_picker: any
+  file_picker: ^8.0.3
+  uuid: ^4.4.0
+  dio: ^5.4.3+1
+  path_provider: ^2.1.3
+  permission_handler: ^11.3.1
+  shared_preferences: ^2.2.3
+  flutter_rating_bar: ^4.0.1
+  url_launcher: ^6.2.6
+
+
+
 
 dev_dependencies:
   flutter_test:
@@ -76,10 +89,11 @@ flutter:
      - assets/images/userlogo.png
      - assets/images/provider.png
      - assets/images/user.png
-     - assets/images/air.png
-     - assets/images/electric.png
-     - assets/images/plmpuing.png
-     - assets/images/carpentry.png
+     - assets/images/plumbing.jpg
+     - assets/images/electricity.jpg
+     - assets/images/Painting.jpg
+     - assets/images/lawn.jpg
+     - assets/images/locat.jpg
 
 
 

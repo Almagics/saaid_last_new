@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+import '../../data/chatBot/aiModel.dart';
+import '../../data/chatBot/aiService.dart';
+import '../../data/chatBot/aiapi.dart';
+
 
 class ChatWidget extends StatefulWidget {
   @override
@@ -7,20 +11,38 @@ class ChatWidget extends StatefulWidget {
 }
 
 class _ChatWidgetState extends State<ChatWidget> {
+
+
+
+  final AiApi  _apiai = AiApi();
+
+
+
   TextEditingController _messageController = TextEditingController();
   List<ChatMessage> _messages = [
     ChatMessage(sender: "Bot", text: "Hello, how can I help you?", isBot: true),
     ChatMessage(sender: "User", text: "Hi, I need assistance.", isBot: false),
   ];
 
-  void _sendMessage() {
+  void _sendMessage() async {
     if (_messageController.text.isNotEmpty) {
+      // Add user message to the list
       setState(() {
         _messages.add(ChatMessage(sender: "User", text: _messageController.text, isBot: false));
-        // Here you would typically send the message to a backend or a bot and handle the response accordingly
-        // For demonstration purposes, let's add a simple response from the bot
-        _messages.add(ChatMessage(sender: "Bot", text: "Your message: ${_messageController.text}", isBot: true));
-        _messageController.clear();
+      });
+
+      // Send message to AI and await the response
+      Map<String, dynamic> model = await _apiai.sendMessage(_messageController.text);
+      AiModel data = AiModel.fromJson(model);
+
+      // Clear the message controller
+      _messageController.clear();
+
+      // Add AI responses to the list
+      setState(() {
+
+          _messages.add(ChatMessage(sender: "Bot", text: data.result, isBot: true));
+
       });
     }
   }

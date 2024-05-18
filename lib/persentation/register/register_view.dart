@@ -3,8 +3,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:saaid/data/sections/sectionModel.dart';
 
 import '../../data/firebase_auth/firebase_auth_service.dart';
+import '../../data/models/userModel.dart';
 import '../resources/assets_manager.dart';
 import '../resources/color_manager.dart';
 import '../resources/font_manager.dart';
@@ -41,6 +43,8 @@ class _RegisterViewState extends State<RegisterView> {
   final birthDayController = TextEditingController();
 
   final ServiceType = TextEditingController();
+
+  final sectionController = TextEditingController();
 
   final userTypeController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
@@ -238,7 +242,7 @@ class _RegisterViewState extends State<RegisterView> {
                        icon: const Icon(Icons.keyboard_arrow_down),
                        decoration: _getDropDownDecoration(
                            hintText: 'Service Type', icon: Icons.home_repair_service),
-                       items: ['Air conditioning repair', 'Electrical repair','Plumbing repair','Carpentry repair']
+                       items: ['Lawn and Garden Care', 'Electricity','Painting and Caulking','Plumbing']
                            .map((e) => DropdownMenuItem(
                          child: Text(e.toString()),
                          value: e.toString(),
@@ -251,6 +255,66 @@ class _RegisterViewState extends State<RegisterView> {
                        }),
                  ),
                ),
+
+               SizedBox(height: 5,),
+               Visibility(
+                 visible: isProviderClicked,
+                 child: Container(
+                   padding: const EdgeInsets.all(4.0),
+                   child: FutureBuilder(
+                       future: _auth.getSectionsByMainGroup(ServiceType.text!),
+                       builder: (context, snapshot) {
+
+                         if (!snapshot.hasData) return CircularProgressIndicator();
+
+                         List<SectionModel> mainGroups = snapshot.data!;
+
+                         return  DropdownButtonFormField(
+                             validator: (value) {
+                               if (value == null) {
+                                 return 'Required*';
+                               }
+                             },
+                             icon: const Icon(Icons.keyboard_arrow_down),
+                             decoration: _getDropDownDecoration(
+                                 hintText: 'Section', icon: Icons.density_medium_outlined),
+                             items: mainGroups
+                                 .map((e) => DropdownMenuItem(
+                               child: Text(e.name),
+                               value: e.id,
+                             ))
+                                 .toList(),
+                             onChanged: (value) {
+                               setState(() {
+                                 sectionController.text = value!;
+                               });
+                             });
+
+                       }
+                   
+                   
+                   
+                   
+                   
+                   
+                   
+                   
+                   
+                   )
+                 ),
+               ),
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -544,6 +608,7 @@ class _RegisterViewState extends State<RegisterView> {
     String password = passwordController.text;
      String  serviceType = ServiceType.text;
      String address = addressController.text;
+     String section = sectionController.text;
 
     String gender = genderController.text;
 
@@ -583,7 +648,8 @@ class _RegisterViewState extends State<RegisterView> {
 
     "Role":role,
       "ServiceType":serviceType,
-    "Username":user.uid.toString()
+    "Username":user.uid.toString(),
+      "section": section
 
 
     });
@@ -598,6 +664,17 @@ class _RegisterViewState extends State<RegisterView> {
 
     if(usersin!= null) {
     print("User is successfully login");
+
+    UserModel? userinfo = await _auth.getUserInfoByEmail(
+        user?.email ?? '');
+
+    // Store user information locally
+    await  _auth.storeUserInfoLocally(
+        user?.uid, user?.uid, user?.email,
+        userinfo?.fullName,
+        userinfo?.role
+
+    );
 
 
 

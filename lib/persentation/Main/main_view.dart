@@ -4,11 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
-import '../appbar_bottom/navBottomWighget.dart';
+
 
 import '../resources/assets_manager.dart';
 import '../resources/color_manager.dart';
 import '../resources/routes_manager.dart';
+import '../section/sectionListView.dart';
 import '../service_provider/proiverList_view.dart';
 import '../widget/roundedCardWidget.dart';
 
@@ -54,43 +55,50 @@ class _MainViewState extends State<MainView> {
                 children: [
 
 
-                  GestureDetector(
-                    onTap: (){
+                  Container(
+                    width: MediaQuery.of(context).size.width * .45,
+                    child: GestureDetector(
+                      onTap: (){
 
 
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => ProviderListView(servicetype: 'Air conditioning repair')),
-                      );
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => SectionListView(mainGroup: 'Lawn and Garden Care',)),
+                        );
 
 
 
-                    },
-                    child: RoundedCard(
-                      title: 'conditioning',
-                      subtitle: 'Air conditioning',
-                      image: AssetImage(ImageAssets.air),
+                      },
+                      child: RoundedCard(
+                        title: 'Lawn',
+                        subtitle: 'Lawn and Garden Care',
+                        image: AssetImage(ImageAssets.lawn),
+                      ),
                     ),
                   ),
                   SizedBox(width: 20,),
-                  GestureDetector(
-                    onTap: (){
+
+                  Container(
+                    width: MediaQuery.of(context).size.width * .45,
+                    child: GestureDetector(
+                      onTap: (){
 
 
 
 
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => ProviderListView(servicetype: 'Electrical repair')),
-                      );
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => SectionListView(mainGroup: 'Electricity',)),
+                        );
 
 
-                    },
+                      },
 
-                    child: RoundedCard(
-                      title: 'Electrical',
-                      subtitle: 'Electrical repair',
-                      image: AssetImage(ImageAssets.electric),
+                      child: RoundedCard(
+                        title: 'Electricity',
+                        subtitle: 'Electrical wiring repair and more',
+                        image: AssetImage(ImageAssets.electricity),
+                      ),
                     ),
                   ),
 
@@ -112,41 +120,47 @@ class _MainViewState extends State<MainView> {
 
 
 
-                    GestureDetector(
-                      onTap: (){
+                    Container(
+                      width: MediaQuery.of(context).size.width * .45,
+                      child: GestureDetector(
+                        onTap: (){
 
 
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => ProviderListView(servicetype: 'Plumbing repair')),
-                        );
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => SectionListView( mainGroup: 'Painting and Caulking',)),
+                          );
 
 
-                      },
-                      child: RoundedCard(
-                        title: 'Plumbing',
-                        subtitle: 'Plumbing repair',
-                        image: AssetImage(ImageAssets.plmpuing),
+                        },
+                        child: RoundedCard(
+                          title: 'Painting',
+                          subtitle: 'Painting and Caulking',
+                          image: AssetImage(ImageAssets.Painting),
+                        ),
                       ),
                     ),
                     SizedBox(width: 20,),
-                    GestureDetector(
+                    Container(
+                      width: MediaQuery.of(context).size.width * .45,
+                      child: GestureDetector(
 
-                      onTap: (){
-
-
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => ProviderListView(servicetype: 'Carpentry repair')),
-                        );
+                        onTap: (){
 
 
-                      },
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => SectionListView(mainGroup: 'Plumbing',)),
+                          );
 
-                      child: RoundedCard(
-                        title: 'Carpentry',
-                        subtitle: 'Carpentry repair',
-                        image: AssetImage(ImageAssets.carpentry),
+
+                        },
+
+                        child: RoundedCard(
+                          title: 'Plumbing',
+                          subtitle: 'Fixing leaks (faucets, pipes)..',
+                          image: AssetImage(ImageAssets.plumbing),
+                        ),
                       ),
                     ),
 

@@ -14,10 +14,12 @@ class ImageAssets {
 
   static const String provider =   "$imagePath/provider.png";
 
-  static const String air =   "$imagePath/air.png";
-  static const String electric =   "$imagePath/electric.png";
-  static const String plmpuing =   "$imagePath/plmpuing.png";
-  static const String carpentry =   "$imagePath/carpentry.png";
+  static const String plumbing =   "$imagePath/plumbing.jpg";
+  static const String electricity =   "$imagePath/electricity.jpg";
+  static const String Painting =   "$imagePath/Painting.jpg";
+  static const String lawn =   "$imagePath/lawn.jpg";
+
+  static const String locat =   "$imagePath/locat.jpg";
 
 
 

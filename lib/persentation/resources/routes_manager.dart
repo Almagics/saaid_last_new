@@ -70,13 +70,13 @@ class RouteGenerator {
 
 
       case Routes.forgetpassword:
-        return MaterialPageRoute(builder: (_) =>  ForgetPasswordView());
+        return MaterialPageRoute(builder: (_) =>  ResetPasswordScreen());
 
       case Routes.orderlist:
         return MaterialPageRoute(builder: (_) =>  OrderViewList());
 
       case Routes.ordernew:
-        return MaterialPageRoute(builder: (_) =>  OrderNewView());
+        return MaterialPageRoute(builder: (_) =>  OrderNewView(providerid: '',));
 
       case Routes.payment:
         return MaterialPageRoute(builder: (_) =>  PaymentView(price: "30"));

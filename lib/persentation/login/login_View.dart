@@ -1,5 +1,6 @@
 
 
+import 'package:saaid/data/models/userModel.dart';
 import 'package:saaid/persentation/resources/strings_manager.dart';
 import 'package:saaid/persentation/resources/values_manager.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -249,6 +250,28 @@ class _LoginViewState extends State<LoginView> {
 
 
     if(user!= null){
+
+      UserModel? userinfo = await _auth.getUserInfoByEmail(
+          user?.email ?? '');
+
+
+      print('rooooool : ${userinfo?.role}');
+
+
+
+
+
+        // Store user information locally
+      await  _auth.storeUserInfoLocally(
+            user?.uid, user?.uid, user?.email,
+            userinfo?.fullName,
+            userinfo?.role
+
+        );
+
+
+
+
       print("User is successfully login");
 
       // var role = await _auth.getRole();

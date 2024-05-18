@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:saaid/data/firebase_auth/firebase_auth_service.dart';
 
 import '../resources/assets_manager.dart';
 import '../resources/color_manager.dart';
@@ -13,6 +14,8 @@ class SplashView extends StatefulWidget {
   State<SplashView> createState() => _SplashViewState();
 }
 
+final FirebaseAuthService _auth = FirebaseAuthService();
+
 class _SplashViewState extends State<SplashView> {
 
   Timer? _timer;
@@ -23,9 +26,25 @@ class _SplashViewState extends State<SplashView> {
   }
 
   _goNext(){
-    Navigator.pushReplacementNamed(context, Routes.loginRoute);
+
+    var role =  _auth.getRole().then((value) => {
+
+      if(value !=null){
+
+        Navigator.pushReplacementNamed(context, Routes.newhome)
+      }else{
+        Navigator.pushReplacementNamed(context, Routes.loginRoute)
+      }
+
+    });
+
+
+
+
+
 
   }
+
 @override
   void initState() {
     // TODO: implement initState

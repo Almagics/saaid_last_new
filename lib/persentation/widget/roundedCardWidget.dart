@@ -31,8 +31,8 @@ class RoundedCard extends StatelessWidget {
             ),
             child: Image(
               image: image,
-              height: 150,
-              width: 150,
+              height: 130,
+              width: 130,
               fit: BoxFit.cover,
             ),
           ),
@@ -41,9 +41,11 @@ class RoundedCard extends StatelessWidget {
             title,
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
-          Text(
-            subtitle,
-            style: TextStyle(fontSize: 16, fontStyle: FontStyle.italic),
+          Center(
+            child: Text(
+              subtitle,
+              style: const TextStyle(fontSize: 16, fontStyle: FontStyle.italic),
+            ),
           ),
           SizedBox(height: 10),
         ],

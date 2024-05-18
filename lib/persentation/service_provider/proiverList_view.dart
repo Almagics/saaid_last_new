@@ -4,10 +4,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:saaid/data/models/userModel.dart';
 import 'package:saaid/data/service_provider/providerService.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 
+import '../../data/oders/orderService.dart';
+import '../order/order_new_view.dart';
 import '../resources/assets_manager.dart';
 import '../resources/color_manager.dart';
 import '../resources/routes_manager.dart';
@@ -28,13 +32,28 @@ class _ProviderListViewState extends State<ProviderListView> {
 
   TextEditingController _searchController = TextEditingController();
 
-  final List<UserModel> items = [
 
 
-//list
-  ];
+  String _searchQuery = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _searchController.addListener(() {
+      setState(() {
+        _searchQuery = _searchController.text;
+      });
+    });
+  }
 
 
+
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
 
 
 
@@ -88,7 +107,7 @@ class _ProviderListViewState extends State<ProviderListView> {
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
 
-                print("tyyyyyyyyyyp222: ${widget.servicetype}");
+                print("type: ${widget.servicetype}");
                 // While data is being fetched
                 return Center(child: CircularProgressIndicator());
               } else if (snapshot.hasError) {
@@ -98,6 +117,15 @@ class _ProviderListViewState extends State<ProviderListView> {
                 // If no data is available
                 return Center(child: Text('No Provider available'));
               } else {
+
+                List<UserModel> filteredProviders = snapshot.data!.where((provider) {
+                  return provider.fullName.toLowerCase().contains(_searchQuery.toLowerCase());
+                }).toList();
+
+                if (filteredProviders.isEmpty) {
+                  return Center(child: Text('No Provider found'));
+                }
+
                 // If data is available, display the list of doctors
                 return  GridView.builder(
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -107,11 +135,14 @@ class _ProviderListViewState extends State<ProviderListView> {
 
 
 
-                  itemCount: snapshot.data!.length,
+                  itemCount: filteredProviders.length,
                   itemBuilder: (context, index) {
                     return GestureDetector(
                         onTap: (){
-                          Navigator.pushReplacementNamed(context, Routes.ordernew);
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (ctx) => OrderNewView(providerid:  filteredProviders[index].email,)));
 
                         },
 
@@ -141,8 +172,22 @@ class _ProviderListViewState extends State<ProviderListView> {
 
 class CardWithImageAndText extends StatelessWidget {
   final UserModel item;
-
+  final OrderService _order = OrderService();
   CardWithImageAndText({required this.item});
+
+  void openWhatsAppChat(String phoneNumber) async {
+    var contact = "+201126331854";
+    var androidUrl = "whatsapp://send?phone=$contact&text=Hi, I need some help";
+    // var iosUrl = "https://wa.me/$contact?text=${Uri.parse('Hi, I need some help')}";
+
+
+
+    await launchUrl(Uri.parse(androidUrl));
+
+
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -161,11 +206,11 @@ class CardWithImageAndText extends StatelessWidget {
               image: AssetImage(ImageAssets.userlogo),
               width: double.infinity,
               //height: MediaQuery.of(context).size.height * 0.25,
-              height: 100.0,
+              height: 50.0,
             //  fit: BoxFit.cover,
             ),
           ),
-          SizedBox(height: 10.0),
+          SizedBox(height:5.0),
 
           Column(
 
@@ -174,10 +219,41 @@ class CardWithImageAndText extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Icon(Icons.design_services),
-                  Text('0'),
-                  const Icon(Icons.star,color: Colors.orange,),
-                  Text('0'),
+
+                FutureBuilder<Map<String, dynamic>>(
+              future: _order.getOrdersData(item.email),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(child: CircularProgressIndicator());
+                } else if (snapshot.hasError) {
+                  return Center(child: Text('Error: ${snapshot.error}'));
+                } else if (snapshot.hasData) {
+                  var data = snapshot.data!;
+                  int orderCount = data['orderCount'];
+                  double averageRating = data['averageRating'];
+
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text('Total Orders: $orderCount'),
+                      Text('Average Rating: ${averageRating.toStringAsFixed(1)}'),
+                      RatingBarIndicator(
+                        rating: averageRating,
+                        itemBuilder: (context, index) => Icon(
+                          Icons.star,
+                          color: Colors.orange,
+                        ),
+                        itemCount: 5,
+                        itemSize: 10,
+                        direction: Axis.horizontal,
+                      ),
+                    ],
+                  );
+                } else {
+                  return Center(child: Text('No data found'));
+                }
+              },
+              ),
 
                 ],
 
@@ -189,10 +265,23 @@ class CardWithImageAndText extends StatelessWidget {
                   child: Text(
                     item.fullName,
                     style: TextStyle(
-                      fontSize: 18.0,
+                      fontSize: 15.0,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
+                ),
+              ),
+
+              Container(
+                padding: EdgeInsets.all(16.0),
+                child: Center(
+                  child: GestureDetector(
+                      onTap: (){
+
+                        openWhatsAppChat(item.phoneNumber?? '');
+                      },
+
+                      child: Icon(Icons.message,size: 20, color: Colors.blue,)),
                 ),
               ),
 

@@ -44,6 +44,14 @@ class PaymentDone extends StatelessWidget {
           ),
 
           ),
+
+
+
+          Center(child:
+          Text("50 SAR",style: Theme.of(context).textTheme.titleLarge,)),
+
+
+
           Center(child:
           Text("The amount has been paid successfully",style: Theme.of(context).textTheme.titleLarge,)
 

@@ -1,12 +1,18 @@
 
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
+import 'package:saaid/persentation/order/order_list_view.dart';
+import 'package:uuid/uuid.dart';
 
 
+import '../../data/firebase_auth/firebase_auth_service.dart';
+import '../../data/oders/orderService.dart';
 import '../resources/assets_manager.dart';
 
 import '../resources/color_manager.dart';
@@ -16,7 +22,10 @@ import '../widget/app_text_form_filed.dart';
 
 
 class OrderNewView extends StatefulWidget {
-  const OrderNewView({Key? key}) : super(key: key);
+  const OrderNewView({Key? key, required this.providerid}) : super(key: key);
+
+  final String providerid;
+
 
   @override
   State<OrderNewView> createState() => _OrderNewViewState();
@@ -24,7 +33,9 @@ class OrderNewView extends StatefulWidget {
 
 class _OrderNewViewState extends State<OrderNewView> {
 
-  //final FirebaseAuthService _auth = FirebaseAuthService();
+  final OrderService _db = OrderService();
+
+  final FirebaseAuthService _auth = FirebaseAuthService();
   // final  _store = FirebaseFirestore.instance;
 
 
@@ -39,6 +50,36 @@ class _OrderNewViewState extends State<OrderNewView> {
   LatLng _selectedLocation = LatLng(0, 0);
 
 
+  DateTime? selectedDate;
+  TimeOfDay? selectedTime;
+
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: selectedDate ?? DateTime.now(),
+      firstDate: DateTime.now(),
+      lastDate: DateTime.now().add(Duration(days: 7)),
+    );
+    if (picked != null && picked != selectedDate) {
+      setState(() {
+        selectedDate = picked;
+      });
+    }
+  }
+
+
+  Future<void> _selectTime(BuildContext context) async {
+    final TimeOfDay? picked = await showTimePicker(
+      context: context,
+      initialTime: selectedTime ?? TimeOfDay.now(),
+    );
+    if (picked != null && picked != selectedTime) {
+      setState(() {
+        selectedTime = picked;
+      });
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -47,10 +88,10 @@ class _OrderNewViewState extends State<OrderNewView> {
       appBar: AppBar(
         backgroundColor: ColorManager.primary,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back,color: ColorManager.white,),
+          icon: Icon(Icons.arrow_back, color: ColorManager.white,),
           onPressed: () {
-
-            Navigator.pushReplacementNamed(context, Routes.newhome);// Navigate back to the previous screen
+            Navigator.pushReplacementNamed(context,
+                Routes.newhome); // Navigate back to the previous screen
           },
         ),
         systemOverlayStyle: SystemUiOverlayStyle(
@@ -66,7 +107,7 @@ class _OrderNewViewState extends State<OrderNewView> {
         ),)),
       ),
 
-      body:  SingleChildScrollView(
+      body: SingleChildScrollView(
           child: Form(
             key: _formKey,
             child: Column(
@@ -74,16 +115,14 @@ class _OrderNewViewState extends State<OrderNewView> {
               children: [
 
 
-
                 Container(padding: const EdgeInsets.all(4.0),
-                  child: const Center(child: Image(image: AssetImage(ImageAssets.logo),height: 150,width: 150,)),
-
-
+                  child: const Center(child: Image(
+                    image: AssetImage(ImageAssets.logo),
+                    height: 150,
+                    width: 150,)),
 
 
                 ),
-
-
 
 
                 SizedBox(height: 5,),
@@ -91,7 +130,10 @@ class _OrderNewViewState extends State<OrderNewView> {
                   padding: const EdgeInsets.all(4.0),
                   child: Text(
                     'Supject',
-                    style: Theme.of(context).textTheme.headlineMedium,
+                    style: Theme
+                        .of(context)
+                        .textTheme
+                        .headlineMedium,
                   ),
                 ),
 
@@ -99,7 +141,8 @@ class _OrderNewViewState extends State<OrderNewView> {
                     child: AppTextFormFiled(
                       iconData: Icons.pending_actions,
                       controller: supjectController,
-                      hintText: 'Enter supject of your order', inputFormatter: null,
+                      hintText: 'Enter supject of your order',
+                      inputFormatter: null,
 
 
                     )),
@@ -110,7 +153,10 @@ class _OrderNewViewState extends State<OrderNewView> {
                   padding: const EdgeInsets.all(4.0),
                   child: Text(
                     'Order Details',
-                    style: Theme.of(context).textTheme.headlineMedium,
+                    style: Theme
+                        .of(context)
+                        .textTheme
+                        .headlineMedium,
                   ),
                 ),
 
@@ -119,7 +165,8 @@ class _OrderNewViewState extends State<OrderNewView> {
                       iconData: Icons.list_alt_sharp,
                       controller: infoController,
                       hintText: 'Enter Order Details',
-                      minLine: 5, inputFormatter: null,
+                      minLine: 5,
+                      inputFormatter: null,
                       maxLine: 8,
 
                     )),
@@ -129,67 +176,60 @@ class _OrderNewViewState extends State<OrderNewView> {
                   padding: const EdgeInsets.all(4.0),
                   child: Text(
                     'Date Of Order',
-                    style: Theme.of(context).textTheme.headlineMedium,
+                    style: Theme
+                        .of(context)
+                        .textTheme
+                        .headlineMedium,
                   ),
                 ),
 
-                Container(
-                  padding: const EdgeInsets.all(4.0),
-                  child: StatefulBuilder(builder: (context, setStateBirthDay) {
-                    return AppTextFormFiled(
-                      readOnly: true,
-                      onTap: () async {
-                        final picker = await showDatePicker(
-                            context: context,
-                            initialDate: DateTime(2004),
-                            firstDate: DateTime(1970),
-                            lastDate: DateTime(2024));
-                        setStateBirthDay(() {
-                          DateorderController.text =
-                              DateFormat.yMd().format(picker!);
-                        });
-                      },
-                      iconData: Icons.cake_outlined,
-                      controller: DateorderController,
-                      hintText: 'Enter date', inputFormatter: null,
-                    );
-                  }),
+                Center(
+                  child: Text(
+                    "Selected date: ${selectedDate != null
+                        ? selectedDate!.toLocal().toString().split(' ')[0]
+                        : 'No date selected'}",
+                  ),
                 ),
-
-
-
-
-                Row(
-                  children: [
-                    Container(
-                      height: 100,
-                      width: 400,
-                      child:   GoogleMap(
-                        initialCameraPosition: CameraPosition(
-                          target: LatLng(0, 0),
-                          zoom: 15,
-                        ),
-                        onMapCreated: (controller) {
-                          setState(() {
-                            _mapController = controller;
-                          });
-                        },
-                        onTap: (LatLng location) {
-                          setState(() {
-                            _selectedLocation = location;
-                          });
-                        },
-                      ),
-                    )
-                  ],
+                Center(
+                  child: ElevatedButton(
+                    onPressed: () => _selectDate(context),
+                    child: Text('Select date'),
+                  ),
+                ),
+                SizedBox(height: 16),
+                Center(
+                  child: Text(
+                    "Selected time: ${selectedTime != null ? selectedTime!.format(
+                        context) : 'No time selected'}",
+                  ),
+                ),
+                Center(
+                  child: ElevatedButton(
+                    onPressed: () => _selectTime(context),
+                    child: Text('Select time'),
+                  ),
                 ),
 
 
 
 
 
-                Row(
 
+
+                const Center(child: SizedBox(
+                    height: 250,
+                    width: 250,
+                    child: Image(image: AssetImage(ImageAssets.locat,),))),
+
+
+
+
+
+
+
+
+
+                Row(
 
 
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -200,7 +240,10 @@ class _OrderNewViewState extends State<OrderNewView> {
                       padding: const EdgeInsets.all(4.0),
                       child: Text(
                         'Select Your Location',
-                        style: Theme.of(context).textTheme.headlineMedium,
+                        style: Theme
+                            .of(context)
+                            .textTheme
+                            .headlineMedium,
                       ),
                     ),
 
@@ -219,23 +262,21 @@ class _OrderNewViewState extends State<OrderNewView> {
                 ),
 
 
-
-
-
-
                 const SizedBox(height: 20,),
                 Container(
-                  padding: const EdgeInsets.fromLTRB(3,0,3,0),
+                  padding: const EdgeInsets.fromLTRB(3, 0, 3, 0),
                   child: Center(
-                    child: SizedBox(width: 380,height: 50,
+                    child: SizedBox(width: 380, height: 50,
                       child: ElevatedButton(
                         onPressed: () {
-                          Navigator.pushReplacementNamed(context, Routes.payment);
-                          // _signin();
+                          _saveOrder();
                         },
 
 
-                        style: Theme.of(context).elevatedButtonTheme.style,
+                        style: Theme
+                            .of(context)
+                            .elevatedButtonTheme
+                            .style,
                         child: const Text('order Now',
                           style: TextStyle(
                               color: Colors.white,
@@ -251,9 +292,7 @@ class _OrderNewViewState extends State<OrderNewView> {
                   ),
                 ),
 
-
-
-
+                SizedBox(height: 16),
               ],
             ),
           )
@@ -282,6 +321,80 @@ class _OrderNewViewState extends State<OrderNewView> {
   }
 
 
-}
+  void _saveOrder() async {
+    String id = Uuid().v4();
+    ;
 
+
+
+    var username = await _auth.getEmail();
+
+
+    String supject = supjectController.text;
+
+    String? subtitle = infoController.text;
+    DateTime? date = selectedDate!;
+
+    String provider = widget.providerid;
+    String location = '';
+
+
+Timestamp? getdatetime ;
+
+    DateTime combinedDateTime = DateTime(
+      selectedDate!.year,
+      selectedDate!.month,
+      selectedDate!.day,
+      selectedTime!.hour,
+      selectedTime!.minute,
+    );
+    if(combinedDateTime != null){
+
+      getdatetime =   Timestamp.fromDate(combinedDateTime);
+    }
+
+
+    bool result = await _db.NewOrder(
+        supject,
+        getdatetime!,
+        "Reviewing",
+        subtitle,
+        username!,
+        id,
+        provider,
+        location,
+        getdatetime!,
+        '',
+        0,
+      '50'
+    );
+
+
+    if (result) {
+      print("data saved successfully ");
+
+    var name = await  _auth.getName();
+      var email = await  _auth.getEmail();
+
+
+
+   var sendmail =   await   _db.sendEmail(toEmail: email!, toName: name!, message: 'THanks Fro Ordring SAAID Services');
+
+
+     print('resssponse mail  ::: ${sendmail}');
+
+
+
+
+
+
+
+
+
+      Navigator.pushReplacementNamed(context, Routes.payment);
+    } else {
+      _displayDialog('Failed to add data');
+    }
+  }
+}
 

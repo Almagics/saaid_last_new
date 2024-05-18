@@ -3,9 +3,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'package:saaid/persentation/about/aboutView.dart';
+import 'package:saaid/persentation/help/helpView.dart';
 
 import '../../data/firebase_auth/firebase_auth_service.dart';
-import '../appbar_bottom/navBottomWighget.dart';
+
 
 import '../resources/assets_manager.dart';
 import '../resources/color_manager.dart';
@@ -50,16 +52,32 @@ class _OptoinsViewState extends State<OptoinsView> {
                   children: [
 
 
-                    RoundedCardOptions(
-                      title: 'Customer Support',
-                      geticon: Icons.headset_mic,
+                    GestureDetector(
+                      onTap: (){
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (ctx) => HelpView()));
+                      },
+                      child: RoundedCardOptions(
+                        title: 'Help',
+                        geticon: Icons.headset_mic,
+                      ),
                     ),
                     SizedBox(width: 20,),
-                    RoundedCardOptions(
-                      title: 'About SAAID',
-                      geticon: Icons.error,
+                    GestureDetector(
+                      onTap: (){
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (ctx) => AboutView()));
+                      },
+                      child: RoundedCardOptions(
+                        title: 'About SAAID',
+                        geticon: Icons.error,
 
 
+                      ),
                     ),
 
 

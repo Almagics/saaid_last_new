@@ -2,7 +2,9 @@ import 'package:flutter/services.dart';
 
 import 'package:flutter/material.dart';
 
-import '../../data/user/user_model.dart';
+import '../../data/firebase_auth/firebase_auth_service.dart';
+import '../../data/models/userModel.dart';
+
 import '../resources/color_manager.dart';
 import '../resources/routes_manager.dart';
 
@@ -21,7 +23,7 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
 
-  //final UserService userdata = UserService();
+  final FirebaseAuthService userdata = FirebaseAuthService();
   UserModel? data;
 
   @override
@@ -32,7 +34,10 @@ class _ProfileState extends State<Profile> {
 
 
   Future<void> fetchData() async {
-    UserModel? newData = new UserModel(address: "judah", email: 'user@mail.com', fullName: 'ahmed ali', password: 'ahmed@99', phoneNumber: '05632326996', role: 'user', username: 'user@mail.com');
+    var email = await userdata.getEmail();
+    UserModel? newData = await userdata.getUserInfoByEmail(email!);
+
+   // new UserModel(address: "judah", email: 'user@mail.com', fullName: 'ahmed ali', password: 'ahmed@99', phoneNumber: '05632326996', role: 'user', username: 'user@mail.com', serviceType: '', gender: '');
 
     setState(() {
       data = newData;
@@ -110,7 +115,7 @@ class _ProfileState extends State<Profile> {
                   child: ClipRRect(
                       borderRadius: BorderRadius.circular(80),
                       child: Image.network(
-                          'https://i.picsum.photos/id/65/200/200.jpg',
+                          'https://firebasestorage.googleapis.com/v0/b/itclub-892e4.appspot.com/o/uploads%2Fimages%2F3135715.png?alt=media&token=4982a746-12ef-417a-afa3-820be50658f2',
                           width: 80,
                           height: 80,
                           fit: BoxFit.fill)),
@@ -120,80 +125,12 @@ class _ProfileState extends State<Profile> {
             ],
           ),
         ),
-        Container(
-            margin: const EdgeInsets.only(top: 210),
-            child: _buildInfoCard(context))
+
       ],
     );
   }
 
-  Widget _buildInfoCard(context) {
-    return Column(
-      children: <Widget>[
-        Container(
-          padding: const EdgeInsets.only(top: 20, left: 20, right: 20),
-          child: Card(
-            elevation: 5.0,
-            color: Colors.white,
-            child: Padding(
-              padding: const EdgeInsets.only(
-                  top: 16.0, bottom: 16.0, right: 10.0, left: 10.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  Column(
-                    mainAxisSize: MainAxisSize.max,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Text(
-                        'Orders',
-                        style: new TextStyle(
-                            fontSize: 18.0,
-                            color: Colors.black,
-                            fontWeight: FontWeight.w400),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 6.0),
-                        child: Text(
-                          '1',
-                          style: TextStyle(
-                              fontSize: 18.0,
-                              color: Color(0Xffde6262),
-                              fontWeight: FontWeight.w600),
-                        ),
-                      ),
-                    ],
-                  ),
-                  new Column(
-                    children: <Widget>[
-                      new Text(
-                        'paid',
-                        style: new TextStyle(
-                            fontSize: 18.0,
-                            color: Colors.black,
-                            fontWeight: FontWeight.w400),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 6.0),
-                        child: new Text(
-                          '75',
-                          style: new TextStyle(
-                              fontSize: 18.0,
-                              color: Color(0Xffde6262),
-                              fontWeight: FontWeight.w600),
-                        ),
-                      ),
-                    ],
-                  ),
 
-                ],
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
 
   Widget _buildMainInfo(BuildContext context, double width) {
     return Container(
@@ -253,8 +190,8 @@ class _ProfileState extends State<Profile> {
                       Icon(Icons.person, color: ColorManager.primary),
                       title: const Text("Info",
                           style: TextStyle(fontSize: 18, color: Colors.black)),
-                      subtitle: const Text(
-                          "Normal User",
+                      subtitle:  Text(
+                          data!.role,
                           style:
                           TextStyle(fontSize: 15, color: Colors.black54)),
                     ),
@@ -266,7 +203,7 @@ class _ProfileState extends State<Profile> {
                           color: ColorManager.primary),
                       title: const Text("Address",
                           style: TextStyle(fontSize: 18, color: Colors.black)),
-                      subtitle: Text(data!.address,
+                      subtitle: Text(data!.Address,
                           style:
                           TextStyle(fontSize: 15, color: Colors.black54)),
                     ),

@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:saaid/data/oders/orderService.dart';
 import 'package:saaid/data/oders/order_list_model.dart';
 
 import '../resources/color_manager.dart';
 
 import '../resources/routes_manager.dart';
-import '../widget/card_list_widget.dart';
+import '../widget/orderCardwidget.dart';
 
 
 class OrderViewList extends StatefulWidget {
-  const OrderViewList({super.key});
-
+  const OrderViewList({super.key,  this.username,  this.provider});
+final String? username;
+  final String? provider;
 
 
   @override
@@ -19,27 +21,11 @@ class OrderViewList extends StatefulWidget {
 
 class _OrderViewListState extends State<OrderViewList> {
 
+final OrderService _db = OrderService();
 
 
 
 
-Future<List<OrderModel>>   GetOrder() async
-{
-
-  final List<OrderModel> items = [
-
-    OrderModel(supject: 'new order', date: '1-4-2024', status: 'pendding', subtitle: 'test order', username: 'ahmed', orderNo: 1),
-    OrderModel(supject: 'new order', date: '1-4-2024', status: 'pendding', subtitle: 'test order', username: 'ahmed', orderNo: 2),
-    OrderModel(supject: 'new order', date: '1-4-2024', status: 'pendding', subtitle: 'test order', username: 'ahmed', orderNo: 3),
-    OrderModel(supject: 'new order', date: '1-4-2024', status: 'pendding', subtitle: 'test order', username: 'ahmed', orderNo: 4),
-
-
-
-  ];
-
-  return items;
-
-}
 
 
   @override
@@ -57,7 +43,7 @@ Future<List<OrderModel>>   GetOrder() async
 
 
       body: FutureBuilder<List<OrderModel>>(
-        future:  GetOrder(),
+        future:  _db.orderListData(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
@@ -72,18 +58,7 @@ Future<List<OrderModel>>   GetOrder() async
             return ListView.builder(
               itemCount: data?.length,
               itemBuilder: (context, index) {
-                return CardWithImageAndText(
-                  onPressed: () {
-
-                  },
-                  name: data![index].supject ?? '',
-                  id: data![index].orderNo ?? 0,
-                  iconlist:   Icon(Icons.inventory_2_outlined,size: 50,color: Colors.white,),
-                  desc:data![index].subtitle ?? '' ,
-                  price: data![index].username ?? '',
-
-
-                );
+                return OrderCardWidget(item: data![index],);
               },
 
             );
@@ -95,6 +70,7 @@ Future<List<OrderModel>>   GetOrder() async
 
     );
   }
+
 }
 
 
