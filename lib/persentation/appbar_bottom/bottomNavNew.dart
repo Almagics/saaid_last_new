@@ -95,7 +95,7 @@ final indexco = TextEditingController();
       _selectedIndex = index;
     });
   }
-  List<String> titleList = ["Home",'Order List','Chatbot','Favorite','Profile'];
+  List<String> titleList = ["Home",'Order List','Chatbot','Profile','options'];
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<String?>(
