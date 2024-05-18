@@ -6,7 +6,7 @@ class AiApi{
   final apiKey = '587f4f3a6dmsh4cb1e8a2597352fp18d698jsncf5b55d7271e';
   final  Uri url = Uri.parse('https://chatgpt-42.p.rapidapi.com/conversationgpt4') ;
 
-
+//test
 
   Future<Map<String, dynamic>> sendMessage(String? message) async{
 
